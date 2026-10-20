@@ -81,6 +81,9 @@ jobs:
       - run: npm run build
   containers:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       TEST_USERNAME: dispatcher
       TEST_PASSWORD: test-only-smoke-password-12345
@@ -104,7 +107,7 @@ jobs:
       - run: python tests/smoke.py
       - name: Standalone cloud web packaging and readiness
         run: |
-          docker build -f infra/Dockerfile.cloud --build-arg APP_COMMIT="$GITHUB_SHA" -t ldt-cloud-ci .
+          docker build -f infra/Dockerfile.cloud --build-arg APP_COMMIT="$GITHUB_SHA" --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" --label "org.opencontainers.image.revision=$GITHUB_SHA" -t ldt-cloud-ci .
           docker run -d --name ldt-cloud-ci --network ldt-ci_default --env-file backend/.env -e POSTGRES_HOST=postgres -e ENVIRONMENT=test -e SECURE_COOKIES=false -e CORS_ORIGINS=http://localhost:8081 -p 127.0.0.1:8081:8080 ldt-cloud-ci
           for attempt in $(seq 1 60); do
             state=$(docker inspect --format '{{.State.Health.Status}}' ldt-cloud-ci)
@@ -137,6 +140,21 @@ jobs:
         run: |
           docker compose --env-file backend/.env -f infra/compose.yaml -p ldt-ci exec -T backup sh /scripts/backup.sh
           docker compose --env-file backend/.env -f infra/compose.yaml -p ldt-ci exec -T backup sh /scripts/verify-restore.sh ldt_restore_check
+      - name: Publish tested RC image for deployment without Railway builds
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release/final-rc'
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USER: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY,,}:sha-$GITHUB_SHA"
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
+          trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
+          docker tag ldt-cloud-ci "$image"
+          docker push "$image"
+          docker inspect --format '{{json .RepoDigests}}' "$image" > test-results/rc-image-digests.json
+          printf 'Tested RC image: `%s`\n' "$image" >> "$GITHUB_STEP_SUMMARY"
       - name: Save logs
         if: always()
         run: |
