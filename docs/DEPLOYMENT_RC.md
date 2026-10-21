@@ -1,5 +1,7 @@
 # Развёртывание release/final-rc
 
+> Актуальный статус21.10.2026: source существующего web уже указывает на проверенный публичный Docker digest; активный runtime покаccd0620. Старый CLI-upload ниже — история, не способ запуска нового источника. [Новая инструкция и blocker](STAND_RELEASE_2026-10-21.md).
+
 19–20.10.2026: RC опубликован на существующий demo Railway с разрешения владельца.
 Проверены CI, runtime commit, additive миграция до d01901, HTTPS и remote flows;
 SF/Fire отдельно включены как синтетический demo, не production incident probability:

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "commit": "833f25d8af74833aa43c13d433b76324fc4c766b",
+  "image": "ghcr.io/goleryt/ldt_misis_lolipop@sha256:e5a871f9c1b6a9fbf47c281a2c291ef4acd6715cbfa8618cf53ab327c5801ba9",
+  "anonymous_pull": true,
+  "backup_sha256": "cd6390c1364dc5d786478a3417bb572e7bba708face17aa1d6c4959d71d0c63f",
+  "restore_target": "new isolated local database",
+  "events_restored": 173869,
+  "revision": "d01901",
+  "schema_check": "PASS",
+  "ready": 200,
+  "login": 200,
+  "models": [
+    "fire",
+    "gas",
+    "sensor_failure"
+  ],
+  "automatic_actions": false,
+  "baked_commit_verified": true,
+  "local_url": "http://127.0.0.1:18113"
+}

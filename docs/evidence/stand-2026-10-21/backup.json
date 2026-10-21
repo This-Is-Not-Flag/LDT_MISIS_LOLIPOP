@@ -1,0 +1,28 @@
+{
+  "observed_at": "2026-10-21T07:49:54.076139+00:00",
+  "backup": {
+    "filename": "rc-pre-image-rollout-20261021T075001Z.dump",
+    "bytes": 10218949,
+    "sha256": "cd6390c1364dc5d786478a3417bb572e7bba708face17aa1d6c4959d71d0c63f",
+    "remote_retained": true,
+    "private_local_copy": true,
+    "restore": "PASS: new local DB, d01901/schema/API/173869 events"
+  },
+  "runtime": {
+    "commit": "ccd06206b5b0411983293ea0361a4b237da40dd5",
+    "revision": "d01901",
+    "events_journal": 173869,
+    "object_catalogue": 97,
+    "channel_catalogue": 11490,
+    "predictions": 3,
+    "ml_scores": 3,
+    "ml_runs": 1,
+    "scenario_runs": 2,
+    "scenario_forecasts": 6,
+    "preventive_requests": 15,
+    "ml_scores_sha256": "aee92bc6dd826d83850d553ef6fcdeab78bb3a2777a20d17c0e50f00ea4a127d",
+    "scenario_forecasts_sha256": "42f52bed405d44ee272158754f6b558915858716aeee9cb60559fdedc1906d95"
+  },
+  "restored_in_new_local_database": true,
+  "evidence": "image-local-acceptance.json"
+}

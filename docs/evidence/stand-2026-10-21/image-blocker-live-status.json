@@ -1,0 +1,25 @@
+{
+  "observed_at": "2026-10-21T08:00:42.147412+00:00",
+  "source": {
+    "image": "ghcr.io/goleryt/ldt_misis_lolipop@sha256:e5a871f9c1b6a9fbf47c281a2c291ef4acd6715cbfa8618cf53ab327c5801ba9",
+    "repo": null
+  },
+  "latest_attempt": {
+    "id": "93b6686e-7549-46fa-8b0b-9f1937f64627",
+    "status": "FAILED",
+    "deploymentStopped": true
+  },
+  "active_deployments": [
+    {
+      "id": "214fc396-d9d9-4b6c-9fa1-52f6012b9482",
+      "status": "SUCCESS",
+      "deploymentStopped": false
+    }
+  ],
+  "health": {
+    "/": 200,
+    "/health": 200,
+    "/ready": 200
+  },
+  "actual_commit": "ccd06206b5b0411983293ea0361a4b237da40dd5"
+}
