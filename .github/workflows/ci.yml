@@ -152,8 +152,7 @@ jobs:
           printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
           trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
           docker tag ldt-cloud-ci "$image"
-          # Publish the tested Linux image, not the local containerd provenance index.
-          docker push --platform linux/amd64 "$image"
+          docker push "$image"
           docker inspect --format '{{json .RepoDigests}}' "$image" > test-results/rc-image-digests.json
           printf 'Tested RC image: `%s`\n' "$image" >> "$GITHUB_STEP_SUMMARY"
       - name: Save logs
